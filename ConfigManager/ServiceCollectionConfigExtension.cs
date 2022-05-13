@@ -8,7 +8,7 @@ namespace ConfigManager
 	{
 		public static IServiceCollection AddFileConfig<T>(this IServiceCollection services, string path, bool saveOnDispose,
 			FileStreamOptions? fileStreamOptions = null, JsonSerializerOptions? jsonSerializerOptions = null)
-		where T : class, new()
+			where T : class, new()
 		{
 			return services.AddSingleton<IFileConfig<T>, FileConfig<T>>((isp) =>
 			{
@@ -16,6 +16,12 @@ namespace ConfigManager
 				cfg.Read();
 				return cfg;
 			});
+		}
+
+		public static IServiceCollection AddConfig<T>(this IServiceCollection services)
+			where T : class, new()
+		{
+			return services.AddSingleton<IConfig<T>, Config<T>>((isp) => new Config<T>());
 		}
 	}
 }
